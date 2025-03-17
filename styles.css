@@ -1,0 +1,250 @@
+.Montserrat{
+    font-family: "Montserrat", sans-serif;
+    font-optical-sizing: auto;
+   font-style: normal;
+}
+body {
+    font-family: "Montserrat", sans-serif;
+    text-align: center;
+    background-color: #000000;
+    margin: 0;
+    padding: 0;
+}
+.container {
+    margin-top: 20px;
+}
+
+.upload-title {
+    width: 693px;
+    height: 90px;
+    position: relative;
+    top: 10px;
+    left: 0;
+
+    font-family: "Montserrat", sans-serif;
+    font-weight: 700;
+    font-size: 50px;
+    line-height: 100%;
+    letter-spacing: 0%;
+    color:#ffffff;
+
+    display: flex;
+    justify-content: center;
+    border-radius: 10px;
+    margin: 0 auto;
+}
+
+
+.upload-button {
+    --glow-color: rgb(50, 205, 50);
+    --glow-spread-color: rgba(50, 205, 50, 0.7);
+    --enhanced-glow-color: rgb(144, 238, 144);
+    --btn-color: rgb(20, 90, 20);
+    border: 0.25em solid var(--glow-color);
+    padding: 1em 3em;
+    color: var(--glow-color);
+    font-size: 15px;
+    font-weight: bold;
+    background-color: var(--btn-color);
+    border-radius: 1em;
+    outline: none;
+    box-shadow: 0 0 1em 0.25em var(--glow-color),
+      0 0 4em 1em var(--glow-spread-color),
+      inset 0 0 0.75em 0.25em var(--glow-color);
+    text-shadow: 0 0 0.5em var(--glow-color);
+    transition: all 0.3s;
+}
+.upload-button::after {
+    pointer-events: none;
+    content: "";
+    position: absolute;
+    top: 120%;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    background-color: var(--glow-spread-color);
+    filter: blur(2em);
+    opacity: 0.7;
+    transform: perspective(1.5em) rotateX(35deg) scale(1, 0.6);
+}
+.upload-button span {
+    font-family: "Montserrat", sans-serif;
+    font-weight: 700;
+    font-size: 48px;
+    line-height: 100%;
+    letter-spacing: 0%;
+    color: white;
+}
+  
+.upload-button:hover {
+    color: var(--btn-color);
+    background-color: var(--glow-color);
+    box-shadow: 0 0 1em 0.25em var(--glow-color),
+    0 0 4em 2em var(--glow-spread-color),
+    inset 0 0 0.75em 0.25em var(--glow-color);
+
+  }
+.upload-button:active {
+    box-shadow: 0 0 0.6em 0.25em var(--glow-color),
+    0 0 2.5em 2em var(--glow-spread-color),
+    inset 0 0 0.5em 0.25em var(--glow-color);
+  }
+.or-text {
+    font-family: "Montserrat", sans-serif;
+    font-weight: 700;
+    font-size: 48px;
+    line-height: 100%;
+    letter-spacing: 0%;
+    width: 62;
+    height: 59;
+    top: -28px;
+    left: 562px;
+    color:#ffffff;
+}
+
+.code-input {
+    position: relative;
+    display: inline-block;
+}
+textarea::placeholder {
+    color: gray;
+    font-size: 20px;
+    opacity: 0.8;
+    text-align: left;
+    padding-right: 15px;
+    padding-top: 1px; 
+}
+textarea {
+    width: 850px;
+    height: 200px;
+    margin-top: 20px;
+    padding: 30px 40px;  /* More padding for better text alignment */
+    border-radius: 50px;
+    border: 2px solid #888;  /* Slightly darker border for better visibility */
+    transition: 0.3s;
+    box-shadow: 5px 5px 20px #ffffff;  /* Softer shadow */
+    font-size: 20px;
+    font-family: ""Montserrat"", sans-serif;
+    color: #333;
+    outline: none;  /* Removes the default blue outline on focus */
+}
+
+textarea:focus {
+    border-color: #0056b3;  /* Changes border color when clicked */
+    box-shadow: 5px 5px 25px rgba(0, 86, 179, 0.5);  /* Blue shadow when focused */
+}
+
+textarea:hover {
+    box-shadow: 0 16px 40px rgba(0, 0, 0, 0.2);
+}
+.animated-button {
+    position: absolute;
+    bottom: 30px;
+    right: 30px;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    padding: 16px 36px;
+    border: 4px solid transparent;
+    font-size: 16px;
+    background-color: white;
+    border-radius: 100px;
+    font-weight: 600;
+    color: #1f387e;
+    box-shadow: 0 0 0 2px #ffffff;
+    cursor: pointer;
+    overflow: hidden;
+    transition: all 0.6s cubic-bezier(0.23, 1, 0.32, 1);
+}
+.animated-button svg {
+    position: absolute;
+    width: 24px;
+    fill: #1f387e;
+    z-index: 9;
+    transition: all 0.8s cubic-bezier(0.23, 1, 0.32, 1);
+}
+.animated-button .arr-1 {
+    right: 16px;
+}
+.animated-button .arr-2 {
+    left: -25%;
+}
+.animated-button .circle {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 20px;
+    height: 20px;
+    background-color: #c5e5e4;
+    border-radius: 50%;
+    opacity: 0;
+    transition: all 0.8s cubic-bezier(0.23, 1, 0.32, 1);
+}
+.animated-button .text {
+    position: relative;
+    z-index: 1;
+    transform: translateX(-12px);
+    transition: all 0.8s cubic-bezier(0.23, 1, 0.32, 1);
+}
+.animated-button:hover {
+    box-shadow: 0 0 0 12px transparent;
+    color: #212121;
+    border-radius: 12px;
+}
+.animated-button:hover .arr-1 {
+    right: -25%;
+}
+.animated-button:hover .arr-2 {
+    left: 16px;
+}
+.animated-button:hover .text {
+    transform: translateX(12px);
+}
+.animated-button:hover svg {
+    fill: #1f387e;
+}
+.animated-button:active {
+    scale: 0.95;
+    box-shadow: 0 0 0 4px greenyellow;
+}
+.animated-button:hover .circle {
+    width: 220px;
+    height: 220px;
+    opacity: 1;
+}
+.illustrations {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    margin-top: 20px;
+}
+.illustrations img {
+    width: 300px;
+    height: auto;
+}
+footer {
+    margin-top: 20px;
+    font-size: 14px;
+}
+.heart {
+    color: red;
+}
+footer {
+    font-family: "Montserrat", sans-serif;
+    font-weight: 700;
+    font-size: 32px;
+    line-height: 100%;
+    letter-spacing: 0%;
+    text-align: center;
+    color: #ffffff;
+}
+
+.heart-img {
+    width: 32px;  /* Adjust image size as needed */
+    height: auto;
+    vertical-align: middle; /* Aligns with text */
+}
+
+
+
