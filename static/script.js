@@ -16,13 +16,21 @@ document.addEventListener("DOMContentLoaded", function () {
                     const formData = new FormData();
                     formData.append("file", file);
 
-                    const response = await fetch("/upload", {
-                        method: "POST",
-                        body: formData
-                    });
+                    try {
+                        const response = await fetch("https://ml-in-compiler-optimization.onrender.com/upload", {
+                            method: "POST",
+                            body: formData
+                        });
 
-                    if (response.redirected) {
-                        window.location.href = response.url;
+                        if (response.ok) {
+                            window.location.href = response.url;
+                        } else {
+                            console.error("File upload failed:", response.statusText);
+                            alert("Failed to upload file. Please try again.");
+                        }
+                    } catch (error) {
+                        console.error("Network error:", error);
+                        alert("Network error. Please check your connection.");
                     }
                 }
             };
@@ -45,13 +53,21 @@ document.addEventListener("DOMContentLoaded", function () {
             const formData = new FormData();
             formData.append("code", code);
 
-            const response = await fetch("/upload", {
-                method: "POST",
-                body: formData
-            });
+            try {
+                const response = await fetch("https://ml-in-compiler-optimization.onrender.com/upload", {
+                    method: "POST",
+                    body: formData
+                });
 
-            if (response.redirected) {
-                window.location.href = response.url;
+                if (response.ok) {
+                    window.location.href = response.url;
+                } else {
+                    console.error("Code submission failed:", response.statusText);
+                    alert("Failed to submit code. Please try again.");
+                }
+            } catch (error) {
+                console.error("Network error:", error);
+                alert("Network error. Please check your connection.");
             }
         });
     } else {
