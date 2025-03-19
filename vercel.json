@@ -1,18 +1,8 @@
 {
-    "version": 2,
-    "builds": [
+    "rewrites": [
         {
-            "src": "app.py",
-            "use": "@vercel/python"
+            "source": "/api/(.*)",
+            "destination": "https://ml-in-compiler-optimization.onrender.com/api/$1"
         }
-    ],
-    "routes": [
-        {
-            "src": "/(.*)",
-            "dest": "app.py"
-        }
-    ],
-    "env": {
-        "UPLOAD_FOLDER": "uploads"
-    }
+    ]
 }
