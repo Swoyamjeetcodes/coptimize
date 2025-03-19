@@ -3,7 +3,7 @@ console.log("Script loaded successfully!");
 document.addEventListener("DOMContentLoaded", function () {
     console.log("DOM fully loaded.");
 
-    const apiUrl = "https://ml-in-compiler-optimization.onrender.com/upload";
+    const apiUrl = "https://ml-in-compiler-optimization-main.onrender.com/upload";
 
     const uploadBtn = document.querySelector(".upload-button");
     if (uploadBtn) {
