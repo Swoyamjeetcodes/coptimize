@@ -1,8 +1,9 @@
 {
     "rewrites": [
-        {
-            "source": "/api/(.*)",
-            "destination": "https://ml-in-compiler-optimization.onrender.com/api/$1"
-        }
+      {
+        "source": "/upload",
+        "destination": "https://ml-in-compiler-optimization.onrender.com/upload"
+      }
     ]
-}
+  }
+  
