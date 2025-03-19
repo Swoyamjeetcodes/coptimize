@@ -5,9 +5,10 @@ import uuid
 from model import optimize_code
 
 app = Flask(__name__)
-CORS(app)  # Enable CORS for cross-origin requests
+CORS(app)  # Enable CORS
 
-UPLOAD_FOLDER = 'uploads'
+# Set upload folder
+UPLOAD_FOLDER = os.getenv('UPLOAD_FOLDER', 'uploads')
 os.makedirs(UPLOAD_FOLDER, exist_ok=True)
 
 @app.route('/')
@@ -46,5 +47,6 @@ def upload_file():
         return jsonify({'error': str(e)}), 500
 
 if __name__ == '__main__':
-    # For local development; in production, use Gunicorn or similar
-    app.run(debug=True)
+    # Ensure compatibility for both Render and local development
+    port = int(os.environ.get("PORT", 5000))
+    app.run(host='0.0.0.0', port=port, debug=True)
