@@ -111,7 +111,7 @@ textarea::placeholder {
 
 textarea {
     width: 800px;
-    height: 200px;
+    height: 100px;
     padding: 30px;
     scrollbar-width: none; /* Hides scrollbar in Firefox */
     -ms-overflow-style: none; /* Hides scrollbar in IE/Edge */
