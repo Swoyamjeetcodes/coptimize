@@ -4,11 +4,17 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Optimization Result</title>
-    <link rel="stylesheet" href="/static/styles.css">
+    <link rel="stylesheet" href="/static/result.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+    <link rel="icon" type="image/jpg" href="../static/images/KIIT-logo-HD.png">
 </head>
 <body>
-    <h1>Optimization Result</h1>
-    <p>The best optimization flag for your code is: <strong>{{ result }}</strong></p>
-    <a href="/">Go Back</a>
+    <div class="container">
+        <div class="heading">Optimization Result</div>
+        <p>The best optimization code is:{{ result }}</p>
+        <button class="goback">Go Back</button>
+      </div>
 </body>
 </html>

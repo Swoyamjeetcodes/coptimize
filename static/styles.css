@@ -238,3 +238,60 @@ footer {
     bottom: 10px;
     width: 100%;
 }
+
+@media screen and (max-width: 600px) {
+    .upload-title {
+        width: 90%;
+        font-size: 33px;
+    }
+
+    .upload-button {
+        padding: 0.5em 1.5em;
+        font-size: 10px;
+        margin-bottom: 20px; /* Adjusted margin */
+        margin-top: 100px;
+    }
+
+    .upload-button span {
+        font-size: 30px;
+    }
+
+    .or-text {
+        margin-top: 20px;
+        font-size: 25px;
+    }
+
+    textarea::placeholder {
+        color: gray;
+        font-size: 18px;
+        opacity: 0.8;
+        text-align: left;
+        padding-left: 15px;
+        padding-right: 15px;
+        padding-top: 1px;
+    }
+    .code-input textarea {
+        width: 90%;
+        height: 80px;
+        padding: 19px;
+        padding-left: 0.4em;
+        padding-right: 0.4em;
+        font-size: 16px;
+        margin-bottom: 20px;  /*Existing margin */
+        margin-top: center;
+    }
+
+    .animated-button {
+        padding: 12px 24px;
+        font-size: 14px;
+    }
+
+    .animated-button svg {
+        width: 20px;
+    }
+
+    footer {
+        font-size: 24px;
+    }
+    
+}
