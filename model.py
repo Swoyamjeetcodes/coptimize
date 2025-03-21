@@ -8,10 +8,11 @@ from sklearn.ensemble import RandomForestClassifier
 from sklearn.model_selection import train_test_split
 
 # Ensure Clang is installed
-CLANG_PATH = shutil.which("clang")
-if CLANG_PATH is None:
-    raise FileNotFoundError("Error: Clang is not installed or not found in PATH.")
+os.environ["PATH"] += os.pathsep + "/usr/bin:/usr/local/bin"
 
+# Check if Clang is accessible
+if not shutil.which("clang"):
+    raise FileNotFoundError("Error: Clang is not installed or not found in PATH.")
 # Load dataset
 dataset_path = "features.csv"  # CSV file containing training data
 
