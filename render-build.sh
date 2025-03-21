@@ -1,7 +1,14 @@
-#!/usr/bin/env bash
+#!/bin/bash
+set -e  # Stop on error
 
-# Update package list and install clang
-apt-get update && apt-get install -y clang
+echo "Updating system packages..."
+apt-get update
 
-# Continue with Python dependencies
+echo "Installing Clang..."
+apt-get install -y clang
+
+echo "Installing Python dependencies..."
+pip install --upgrade pip
 pip install -r requirements.txt
+
+echo "Build completed successfully!"
