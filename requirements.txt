@@ -1,3 +1,6 @@
 flask
 gunicorn
 uuid
+pandas
+numpy
+scikit-learn
