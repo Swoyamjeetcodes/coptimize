@@ -60,6 +60,8 @@ p{
     transition: all 0.3s;
     position: relative;
     display: inline-block;
+    text-decoration: none;
+    cursor: pointer;
     margin-top: 40px; /* Adjust this value as needed */
     margin-bottom: 20px;
 }
