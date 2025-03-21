@@ -20,5 +20,5 @@ RUN mkdir -p uploads
 # Set the environment variable for Flask
 ENV FLASK_APP=app.py
 
-# Run the application with Gunicorn
-CMD ["gunicorn", "-w", "4", "-b", "0.0.0.0:$PORT", "app:app"]
+# Run the application with Gunicorn (shell form)
+CMD gunicorn -w 4 -b 0.0.0.0:$PORT app:app

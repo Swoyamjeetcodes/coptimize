@@ -3,6 +3,14 @@ import os
 import subprocess
 import uuid
 from model import optimize_code
+import logging
+
+logging.basicConfig(level=logging.INFO)
+try:
+    clang_version = subprocess.check_output(['clang', '--version']).decode('utf-8')
+    logging.info(f"Clang version: {clang_version}")
+except Exception as e:
+    logging.error(f"Error checking Clang: {e}")
 
 app = Flask(__name__)
 UPLOAD_FOLDER = 'uploads'
