@@ -1,29 +1,15 @@
 import os
 import subprocess
-import numpy as np
 import pandas as pd
-import json
-import shutil
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.model_selection import train_test_split
+from pycparser import c_parser, c_ast
 
-# Ensure Clang is installed
-os.environ["PATH"] += os.pathsep + "/usr/bin:/usr/local/bin"
-
-# Check if Clang is accessible
-if not shutil.which("clang"):
-    raise FileNotFoundError("Error: Clang is not installed or not found in PATH.")
 # Load dataset
 dataset_path = "features.csv"  # CSV file containing training data
 
 try:
-    if not os.path.exists(dataset_path):
-        raise FileNotFoundError(f"Dataset not found: {dataset_path}")
-
     df = pd.read_csv(dataset_path)
-    if df.empty:
-        raise ValueError("Error: Dataset is empty.")
-
     X = df[['LOC', 'ForLoops', 'WhileLoops', 'IfStatements']].values  # Feature columns
     y = df['BestFlag'].values  # Target column
 
@@ -36,76 +22,92 @@ try:
     print("Model trained successfully using dataset.")
 except Exception as e:
     print(f"Error loading dataset: {e}")
-    model = None  # Avoid using an uninitialized model
 
 def count_lines_of_code(file_path):
+    """Count the number of non-empty lines in a file."""
+    with open(file_path, 'r', encoding='utf-8') as f:
+        return sum(1 for line in f if line.strip())
+
+def preprocess_c_file(file_path, fake_libc_include_path):
+    """Preprocess the C file using the C preprocessor (cpp)."""
     try:
-        with open(file_path, 'r', encoding='utf-8') as f:
-            return sum(1 for line in f if line.strip())
+        # Run the C preprocessor
+        command = [
+            "cpp",
+            "-I", fake_libc_include_path,  # Include the fake_libc_include directory
+            file_path
+        ]
+        result = subprocess.run(command, capture_output=True, text=True)
+        if result.returncode != 0:
+            print(f"Preprocessing failed: {result.stderr}")
+            return None
+        return result.stdout
     except Exception as e:
-        print(f"Error reading file {file_path}: {e}")
-        return 0
+        print(f"Error during preprocessing: {e}")
+        return None
 
 def analyze_static_features(file_path):
-    """Extracts static code features using Clang AST."""
+    """Analyze a C file to count for loops, while loops, and if statements."""
+    # Path to the fake_libc_include folder
+    fake_libc_include_path = os.path.join("utils", "fake_libc_include")
+    
+    # Preprocess the C file
+    preprocessed_code = preprocess_c_file(file_path, fake_libc_include_path)
+    if preprocessed_code is None:
+        return 0, 0, 0  # Return default values if preprocessing fails
+    
+    # Initialize the C parser
+    parser = c_parser.CParser()
+    
     try:
-        clang_path = shutil.which("clang")
-        if not clang_path:
-            print("Warning: Clang not found in PATH. Will use default optimization.")
-            # Don't raise an error here, just set a flag
-            CLANG_AVAILABLE = False
-        else:
-            CLANG_AVAILABLE = True
+        # Parse the preprocessed C code
+        ast = parser.parse(preprocessed_code)
     except Exception as e:
-        print(f"Error checking for Clang: {e}")
-    CLANG_AVAILABLE = False
+        print(f"Error parsing C file: {e}")
+        return 0, 0, 0  # Return default values if parsing fails
+    
+    # Counters for features
+    for_loops = 0
+    while_loops = 0
+    if_statements = 0
+    
+    # Recursive function to traverse the AST
+    def count_nodes(node):
+        nonlocal for_loops, while_loops, if_statements
+        if isinstance(node, c_ast.For):
+            for_loops += 1
+        elif isinstance(node, c_ast.While):
+            while_loops += 1
+        elif isinstance(node, c_ast.If):
+            if_statements += 1
         
-    command = [clang_path, "-Xclang", "-ast-dump=json", "-fsyntax-only", file_path]
-    result = subprocess.run(command, capture_output=True, text=True)
-
-    if result.returncode != 0:
-        print(f"Error: Clang AST dump failed.\n{result.stderr}")
-        return 0, 0, 0  # Return default values to avoid crashes
-
-    try:
-        ast = json.loads(result.stdout)
-    except json.JSONDecodeError:
-        print("Error: Failed to parse Clang AST output.")
-        return 0, 0, 0
-
-    def count_nodes(node, kind):
-        if isinstance(node, dict):
-            return (node.get("kind") == kind) + sum(count_nodes(v, kind) for v in node.values())
-        if isinstance(node, list):
-            return sum(count_nodes(item, kind) for item in node)
-        return 0
-
-    for_loops = count_nodes(ast, "ForStmt")
-    while_loops = count_nodes(ast, "WhileStmt")
-    if_statements = count_nodes(ast, "IfStmt")
+        # Recursively visit child nodes
+        for _, child in node.children():
+            count_nodes(child)
+    
+    # Start traversing the AST
+    count_nodes(ast)
+    
     return for_loops, while_loops, if_statements
 
 def extract_features_from_code(file_path):
-    """Extracts features like LOC, loop counts, and conditional counts."""
+    """Extract features (LOC, for loops, while loops, if statements) from a C file."""
     loc = count_lines_of_code(file_path)
     num_for_loops, num_while_loops, num_if_statements = analyze_static_features(file_path)
-
+    
+    # Print the extracted features
+    print("Extracted Features:")
+    print(f"  - Lines of Code (LOC): {loc}")
+    print(f"  - Number of For Loops: {num_for_loops}")
+    print(f"  - Number of While Loops: {num_while_loops}")
+    print(f"  - Number of If Statements: {num_if_statements}")
+    
     return [loc, num_for_loops, num_while_loops, num_if_statements]
 
 def optimize_code(file_path):
-    """Predicts the best compiler optimization flag for given C code."""
-    if model is None:
-        print("Error: Model not loaded. Skipping optimization.")
-        return None
-
+    """Predict the best optimization for a given C file."""
     try:
         features = extract_features_from_code(file_path)
-
-        # Ensure valid feature extraction before prediction
-        if all(f == 0 for f in features):  
-            print("Warning: Extracted features are all zeros. Invalid input?")
-            return None
-
         predicted_opt = model.predict([features])[0]
         return predicted_opt
     except Exception as e:
