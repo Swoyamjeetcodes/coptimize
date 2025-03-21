@@ -6,8 +6,11 @@ services:
       apt-get update && apt-get install -y clang
       pip install -r requirements.txt
       mkdir -p uploads
+      which clang  # Verify clang installation
     startCommand: "gunicorn -w 4 -b 0.0.0.0:$PORT app:app"
     envVars:
       - key: PYTHON_VERSION
         value: 3.9.0
+      - key: PATH
+        value: /usr/bin:/bin:/usr/sbin:/sbin:/usr/local/bin:$PATH
     healthCheckPath: /

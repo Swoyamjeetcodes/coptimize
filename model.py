@@ -48,10 +48,17 @@ def count_lines_of_code(file_path):
 
 def analyze_static_features(file_path):
     """Extracts static code features using Clang AST."""
-    clang_path = shutil.which("clang")
-    if not clang_path:
-        print("Error: Clang executable not found.")
-        return 0, 0, 0  # Return default values to avoid crashes
+    try:
+        clang_path = shutil.which("clang")
+        if not clang_path:
+            print("Warning: Clang not found in PATH. Will use default optimization.")
+            # Don't raise an error here, just set a flag
+            CLANG_AVAILABLE = False
+        else:
+            CLANG_AVAILABLE = True
+    except Exception as e:
+        print(f"Error checking for Clang: {e}")
+    CLANG_AVAILABLE = False
         
     command = [clang_path, "-Xclang", "-ast-dump=json", "-fsyntax-only", file_path]
     result = subprocess.run(command, capture_output=True, text=True)
