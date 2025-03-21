@@ -3,8 +3,6 @@ console.log("Script loaded successfully!");
 document.addEventListener("DOMContentLoaded", function () {
     console.log("DOM fully loaded.");
 
-    const apiUrl = "https://ml-in-compiler-optimization-main.onrender.com/upload";
-
     const uploadBtn = document.querySelector(".upload-button");
     if (uploadBtn) {
         console.log("Upload button found.");
@@ -44,10 +42,17 @@ document.addEventListener("DOMContentLoaded", function () {
                 return;
             }
 
-            const features = extractFeaturesFromCode(code); // Implement this function
-            const prediction = await getPrediction(features);
+            const formData = new FormData();
+            formData.append("code", code);
 
-            alert(`Best Optimization Flag: ${prediction}`);
+            const response = await fetch("/upload", {
+                method: "POST",
+                body: formData
+            });
+
+            if (response.redirected) {
+                window.location.href = response.url;
+            }
         });
     } else {
         console.error("Enter button (.animated-button) not found.");
@@ -69,18 +74,3 @@ document.addEventListener("DOMContentLoaded", function () {
         });
     }
 });
-
-async function getPrediction(features) {
-    const response = await fetch(apiUrl, {
-        method: 'POST',
-        headers: {'Content-Type': 'application/json'},
-        body: JSON.stringify({features: features})
-    });
-    const result = await response.json();
-    return result.prediction;
-}
-
-function extractFeaturesFromCode(code) {
-    // Dummy feature extraction for demonstration
-    return [code.length, (code.match(/for|while/g) || []).length];
-}

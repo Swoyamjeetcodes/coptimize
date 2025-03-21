@@ -1,9 +1,0 @@
-{
-    "rewrites": [
-      {
-        "source": "/upload",
-        "destination": "https://ml-in-compiler-optimization-main.onrender.com/upload"
-      }
-    ]
-  }
-  

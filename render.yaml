@@ -1,7 +1,6 @@
 services:
   - type: web
-    name: ml-compiler-backend
+    name: flask-app
     env: python
     buildCommand: "pip install -r requirements.txt"
-    startCommand: "gunicorn app:app"
-    plan: free
+    startCommand: "gunicorn -w 4 -b 0.0.0.0:$PORT app:app"
