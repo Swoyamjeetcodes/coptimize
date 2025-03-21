@@ -29,10 +29,10 @@ html, body {
     margin: 0 auto;
     margin-top: 20px;
 }
-p{
+.optimization{
     font-family: "Montserrat", sans-serif;
     font-weight: 700;
-    font-size: 30px;
+    font-size: 28px;
     color: #ffffff;
     display: flex;
     justify-content: center;
@@ -85,4 +85,67 @@ p{
     box-shadow: 0 0 0.6em 0.25em var(--glow-color),
     0 0 2.5em 2em var(--glow-spread-color),
     inset 0 0 0.5em 0.25em var(--glow-color);
+}
+ 
+.btn-shine {
+    position: relative;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    padding: 12px 48px;
+    color: #90EE90;
+    background: linear-gradient(to right, #32CD32 0%, #B0F2B0 50%, #32CD32 100%);
+    background-size: 300% auto;
+    background-position: 0;
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    animation: shine 5s linear infinite;
+    animation-fill-mode: forwards;
+    -webkit-text-size-adjust: none;
+    font-weight: 600;
+    font-size: 50px;
+    text-decoration: none;
+    white-space: nowrap;
+    font-family: "Montserrat", sans-serif;
+  }
+  @-moz-keyframes shine {
+    0% {
+      background-position: 0;
+    }
+    60% {
+      background-position: 180px;
+    }
+    100% {
+      background-position: 180px;
+    }
+  }
+  @-webkit-keyframes shine {
+    0% {
+      background-position: 0;
+    }
+    60% {
+      background-position: 180px;
+    }
+    100% {
+      background-position: 180px;
+    }
+  }
+  @-o-keyframes shine {
+    0% {
+      background-position: 0;
+    }
+    60% {
+      background-position: 180px;
+    }
+    100% {
+      background-position: 180px;
+    }
+  }
+  @keyframes shine {
+    0% {
+        background-position: -200%;
+    }
+    100% {
+        background-position: 200%;
+    }
 }
