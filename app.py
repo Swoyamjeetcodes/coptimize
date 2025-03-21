@@ -3,17 +3,9 @@ import os
 import subprocess
 import uuid
 from model import optimize_code
-import logging
-
-logging.basicConfig(level=logging.INFO)
-try:
-    clang_version = subprocess.check_output(['clang', '--version']).decode('utf-8')
-    logging.info(f"Clang version: {clang_version}")
-except Exception as e:
-    logging.error(f"Error checking Clang: {e}")
 
 app = Flask(__name__)
-UPLOAD_FOLDER = 'uploads'
+UPLOAD_FOLDER = os.path.join(os.getcwd(), 'uploads')
 os.makedirs(UPLOAD_FOLDER, exist_ok=True)
 
 @app.route('/')
@@ -48,5 +40,4 @@ def upload_file():
     return redirect(url_for('result_page', result=result))
 
 if __name__ == '__main__':
-    port = int(os.environ.get('PORT', 5000))  # Render sets the PORT dynamically
-    app.run(host='0.0.0.0', port=port, debug=False)
+    app.run(host='0.0.0.0', port=5000)
