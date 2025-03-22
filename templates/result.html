@@ -5,17 +5,36 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Optimization Result</title>
     <link rel="stylesheet" href="/static/result.css">
+    <link rel="stylesheet" href="/static/loader.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
     <link rel="icon" type="image/jpg" href="../static/images/KIIT-logo-HD.png">
 </head>
 <body>
-    <div class="container">
+    <!-- Loader Container -->
+    <div class="loader-container" id="loaderContainer">
+        <div class="card">
+            <div class="loader">
+                <p>processing</p>
+                <div class="words">
+                    <span class="word">flags</span>
+                    <span class="word">code</span>
+                    <span class="word">optimization</span>
+                    <span class="word">performance</span>
+                    <span class="word">code</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container" id="resultContainer" style="display: none;">
         <div class="heading">Optimization Result</div>
         <p class="optimization">The best optimization flag is:</p>
         <p><a href="#" class="btn-shine">{{ result }}</a></p>
         <a href="/" class="goback">Go Back</a>
-      </div>
+    </div>
+
+    <script src="/static/result-script.js"></script>
 </body>
 </html>

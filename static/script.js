@@ -3,6 +3,51 @@ console.log("Script loaded successfully!");
 document.addEventListener("DOMContentLoaded", function () {
     console.log("DOM fully loaded.");
 
+    const loaderContainer = document.getElementById("loaderContainer");
+    
+    // Check if we should show loader or results
+    if (sessionStorage.getItem("resultPending") !== "true") {
+        // On index page, hide loader initially
+        if (loaderContainer) {
+            loaderContainer.style.opacity = "0";
+            loaderContainer.style.visibility = "hidden";
+        }
+    }
+
+    const showLoader = () => {
+        if (loaderContainer) {
+            loaderContainer.style.opacity = "1";
+            loaderContainer.style.visibility = "visible";
+        }
+    };
+
+    const handleSubmission = async (data) => {
+        // Show loader before submission
+        showLoader();
+        
+        // Set flag indicating we're expecting results
+        sessionStorage.setItem("resultPending", "true");
+        
+        let response;
+        try {
+            response = await fetch("/upload", {
+                method: "POST",
+                body: data
+            });
+            
+            if (response.redirected) {
+                window.location.href = response.url;
+            }
+        } catch (error) {
+            console.error("Error during submission:", error);
+            // Hide loader if there's an error
+            loaderContainer.style.opacity = "0";
+            loaderContainer.style.visibility = "hidden";
+            // Clear pending flag
+            sessionStorage.removeItem("resultPending");
+        }
+    };
+
     const uploadBtn = document.querySelector(".upload-button");
     if (uploadBtn) {
         console.log("Upload button found.");
@@ -15,15 +60,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 if (file) {
                     const formData = new FormData();
                     formData.append("file", file);
-
-                    const response = await fetch("/upload", {
-                        method: "POST",
-                        body: formData
-                    });
-
-                    if (response.redirected) {
-                        window.location.href = response.url;
-                    }
+                    await handleSubmission(formData);
                 }
             };
             input.click();
@@ -44,15 +81,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
             const formData = new FormData();
             formData.append("code", code);
-
-            const response = await fetch("/upload", {
-                method: "POST",
-                body: formData
-            });
-
-            if (response.redirected) {
-                window.location.href = response.url;
-            }
+            await handleSubmission(formData);
         });
     } else {
         console.error("Enter button (.animated-button) not found.");
