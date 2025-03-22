@@ -1,0 +1,116 @@
+/* Loader styles */
+.loader-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: #1E1E1E;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+    opacity: 1;
+    visibility: visible;
+    transition: opacity 0.3s ease;
+}
+
+.card {
+    /* color used to softly clip top and bottom of the .words container */
+    --bg-color: #1E1E1E;
+    background-color: var(--bg-color);
+    padding: 1rem 2rem;
+    border-radius: 1.25rem;
+}
+
+.loader {
+    color: rgb(124, 124, 124);
+    font-family: "Montserrat", sans-serif;
+    font-weight: 500;
+    font-size: 25px;
+    -webkit-box-sizing: content-box;
+    box-sizing: content-box;
+    height: 40px;
+    padding: 10px 10px;
+    display: flex;
+    align-items: center; /* Ensure vertical alignment */
+    flex-direction: row; /* Ensure horizontal layout */
+    border-radius: 8px;
+}
+
+.loader p {
+    margin: 0;
+    padding-right: 8px; /* Add space between "analyzing" and the words */
+}
+
+.words {
+    overflow: hidden;
+    position: relative;
+    height: 40px; /* Match height with loader */
+    display: inline-block;
+    /* Add mask effect for cleaner transitions */
+    mask-image: linear-gradient(to bottom, 
+        transparent 0%, 
+        black 30%, 
+        black 70%, 
+        transparent 100%
+    );
+    -webkit-mask-image: linear-gradient(to bottom, 
+        transparent 0%, 
+        black 30%, 
+        black 70%, 
+        transparent 100%
+    );
+}
+
+/* Remove the ::after pseudo-element as we're using mask instead */
+.words::after {
+    content: none;
+}
+
+.word {
+    display: block;
+    height: 100%;
+    padding-left: 6px;
+    color: #32CD32; /* Green theme */
+    line-height: 40px; /* Ensure vertical centering of text */
+    position: relative;
+    top: -2px; /* Adjust this value to align with "analyzing" text */
+    animation: spin_words 4s infinite;
+    padding-top: 0px;
+    padding-bottom: 0px;
+    animation-timing-function: cubic-bezier(0.1, 0.9, 0.2, 1); /* Uniform timing function */
+}
+
+@keyframes spin_words {
+    /* Start with flags already visible (no initial animation) */
+    0% {
+        transform: translateY(0);
+    }
+    /* First transition (flags to code) is quicker */
+    10% {
+        transform: translateY(-105%);
+    }
+    25% {
+        transform: translateY(-100%);
+    }
+    /* Normal pace for other words */
+    40% {
+        transform: translateY(-205%);
+    }
+    60% {
+        transform: translateY(-200%);
+    }
+    70% {
+        transform: translateY(-305%);
+    }
+    85% {
+        transform: translateY(-300%);
+    }
+    90% {
+        transform: translateY(-405%);
+    }
+    100% {
+        transform: translateY(-400%);
+    }
+}
